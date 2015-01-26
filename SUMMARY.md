@@ -2,6 +2,7 @@
 
 * [Introduction](introduction.md)
 * [Signal Processing Fundamentals](signal-processing.md)
+  * [One Dimensional](signal-processing/one-dimensional.md)
 * [Algorithms for Reconstruction with non-diffracting sources](algorithms-nd.md)
 * [Measurement of Projection Data - The Nondiffracting Case](measurement-nd.md)
 * [Aliasing Artifacts and Noise in CT Images](artifacts-and-noise.md)
