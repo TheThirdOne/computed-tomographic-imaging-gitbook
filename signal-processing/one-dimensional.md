@@ -8,9 +8,7 @@ represented in this book by the notation
 
 $$x(t)$$
 
-where $$x(t)$$ denotes the value as a function at $$t$$. This function may be given a
-discrete representation by sampling its value over a set of points as illustrated
-in Fig. 2.1(b). Thus the discrete representation can be expressed as the list
+where $$x(t)$$ denotes the value as a function at $$t$$. This function may be given a discrete representation by sampling its value over a set of points as illustrated in Fig. 2.1(b). Thus the discrete representation can be expressed as the list
 
 $$ \cdot\cdot\cdot, x(-\tau), x(0), x(\tau), x(2\tau), \cdot\cdot\cdot,x(n\tau) \cdot\cdot\cdot$$
 
@@ -33,8 +31,7 @@ $$ rect\>(t) =
 \right.
 $$
 
-This is illustrated in Fig. 2.2(a). Consider a sequence of functions of ever
-decreasing support on the t-axis as described by
+This is illustrated in Fig. 2.2(a). Consider a sequence of functions of ever decreasing support on the t-axis as described by
 
 $$\delta_n(t) = n \> rect \> (nt)$$
 
@@ -42,7 +39,7 @@ and illustrated in Fig. 2.2(b). Each function in this sequence has the same area
 
 $$\int_{-\infty}^{\infty}\delta(t)dt = 1$$
 
-The delta function has the following “sampling” property
+  The delta function has the following “sampling” property
 
 $$\int_{-\infty}^{\infty}x(t)\delta(t-t')dt = x(t')$$
 
@@ -50,3 +47,106 @@ $$\int_{-\infty}^{\infty}x(t)\delta(t-t')dt = x(t')$$
 
 
 where $$\delta(t-t')$$  is an impulse shifted to the location $$t = t’$$ . When an impulse enters into a product with an arbitrary $$x(t)$$, all the values of $$x(t)$$ outside the location $$t = t’$$ are disregarded. Then by the integral property of the delta function we obtain (7); so we can say that $$\delta(t-t')$$ samples the function $$x(t)$$ at $$t’$$.
+
+###Linear Operations
+
+  Functions may be operated on for purposes such as filtering, smoothing, etc. The application of an operator $$O$$ to a function $$x(t)$$ will be denoted by
+
+$$O[x(t)]$$
+
+The operator is linear provided
+
+$$O[\alpha x(t)+\beta y(t)]=\alpha O[x(t)]+\beta O[y(t)]$$
+
+for any pair of constants $$\alpha$$ and $$\beta$$ and for any pair of functions $$x(t)$$ and $$y(t)$$.
+  
+  An interesting class of linear operations is defined by the following integral form
+
+$$z(t)=\int_{-\infty}^{\infty}x(t')h(t,t')dt'$$
+
+where $$h$$ is called the impulse response. It is easily shown that $$h$$ is the system response of the operator applied to a delta function. Assume that the input function is an impulse at $$t = t_0$$ or
+
+$$x(t)=\delta(t-t_0)$$
+
+Substituting into (10), we obtain
+
+$$z(t)=\int_{-\infty}^{\infty}\delta(t-t_0)h(t,t')dt'$$
+
+Therefore $$h(t, t')$$ can be called the impulse response for the impulse applied at $$t'$$.
+
+  A linear operation is called shift invariant when
+
+$$y(t)=O[x(t)]$$
+
+implies
+
+$$y(t-\tau)=O[x(t-\tau)]$$
+
+or equivalently
+
+$$h(t, t')=h(t-t')$$
+
+This implies that when the impulse is shifted by $$t'$$, so is the response, as is further illustrated in Fig. 2.3. In other words, the response produced by the linear operation does not vary with the location of the impulse; it is merely shifted by the same amount.
+
+  For shift invariant operations, the integral form in (10) becomes
+  
+$$z(t)=\int_{-\infty}^{\infty}x(t')h(t-t')dt'$$
+  
+This is now called a convolution and is represented by
+
+$$z(t) = x(t)*h(t)$$
+
+The process of convolution can be viewed as flipping one of the two functions, shifting one with respect to the other, multiplying the two and integrating the product for every shift as illustrated by Fig. 2.4.
+
+![The impulse response of a shift invariant filter is shown convolved with three impulses.](../figures/2-3.png "Figure 2.3")
+
+![The results of convolving an impulse response with an impulse (top) and a square pulse (bottom) are shown here.](../figures/2-4.png "Figure 2.4")
+
+  Convolution can also be defined for discrete sequences. If
+
+$$x_i=x(i\tau)$$
+
+and
+
+$$y_i=y(i\tau)$$
+
+then the convolution of $$x_i$$ with $$y_i$$ can be written as
+
+$$y_i = \tau \sum\limits_{j=-\infty}^\infty x_jh_{i-j}$$
+
+This is a discrete approximation to the integral of (17).
+
+###Fourier Representation
+
+  For many purposes it is useful to represent functions in the frequency domain. Certainly the most common reason is because it gives a new perspective to an otherwise difficult problem. This is certainly true with the convolution integral; in the time domain convolution is an integral while in the frequency domain it is expressed as a simple multiplication.
+  
+  In the sections to follow we will describe four different varieties of the Fourier transform. The continuous Fourier transform is mostly used in theoretical analysis. Given that with real world signals it is necessary to periodically sample the data, we are led to three other Fourier transforms that approximate either the time or frequency data as samples of the continuous functions. The four types of Fourier transforms are summarized in Table 2.1.
+
+
+**Table 2.1**:Four different Fourier transforms can be defined by sampling the time and frequency domains.
+
+|                      | Continuous Time | Discrete Time |
+|----------------------|-----------------|---------------|
+| Continuous Frequency |Name: Fourier Transform <br> Forward:$$\>X(\omega)=\int_{-\infty}^{\infty}x(t)e^{-j\omega t}dt$$ <br> Inverse: $$x(t)= 1/2\int_{-\infty}^{\infty}X(\omega)e^{j\omega t}d\omega$$ <br> Periodicity: None|Name: Discrete Fourier Transform <br> Forward:$$\>X(\omega)=\sum\limits_{n = -\infty}^{\infty}x(n\tau)e^{-j\omega n\tau}$$ <br> Inverse: $$x(n\tau)= \tau/2\pi\int_{-\pi/\tau}^{\pi/\tau}X(\omega)e^{j\omega n\tau}d\omega$$ <br> Periodicity: $$X(\omega) = X(\omega + i(2\pi/\tau))$$|
+| Discrete Frequency   |Name: Fourier Series <br> Forward:$$\>X_n=1/T\int_{0}^{T}x(t)e^{-jn(2\pi/T)t}dt$$ <br> Inverse: $$x(t)= \sum\limits_{n = -\infty}^{\infty}X_ne^{jn(2\pi/T)t}$$ <br> Periodicity: $$x(t)=x(t+iT)$$|Name: Discrete Fourier Transform <br> Forward:$$\>X_k=1/N\sum\limits_{n = 0}^{N}x_ne^{-j(2\pi/N)kn}$$ <br> Inverse: $$x_k= \sum\limits_{n = 0}^{N}X_ne^{j(2\pi/N)kn}$$ <br> Periodicity: $$x_k=x_{k+iN}$$ and $$X_k = X_{k+iN}$$|
+
+  Assume that we have a continuous function $$x(t)$$ defined for $$T_1 \leq t \leq T_2$$. This function can be expressed in the following form:
+
+$$x(t) = \sum\limits_{k=-\infty}^\infty z_ke^{jkw_0t}$$
+
+where $$j = \sqrt{-1}$$ and $$w_0 - 2\pi f_0 - 2\pi/T$$, $$T - T_2 - T_1$$, and $$z_k$$ are complex coefficients to be discussed shortly. What is being said here is that $$x(t)$$ is the sum of a number of functions of the form
+
+$$e^{jkw_0t}$$
+
+This function represents
+
+$$e^{jkw_0t} = cos (kw_0t) + j\>sin (kw_0t)$$
+
+The two functions on the right-hand side, commonly referred to as sinusoids, are oscillatory with $$kf_0$$ cycles per unit of $$t$$ as illustrated by Fig. 2.5. $$kf_0$$ is called the frequency of the sinusoids. Note that the sinusoids in (24) are at multiples of the frequency $$f_0$$, which is called the fundamental frequency.
+
+![The first three components of a Fourier series are shown. The cosine waves represent the real part of the signal while the sine waves represent the imaginary.](../figures/2-5.png "Figure 2.5")
+
+The coefficients $$z_k$$ in (22) are called the complex amplitude of the $$k$$th
+component, and can be obtained by using the following formula
+
+$$z_k = \frac{1}{T}\int_{T_1}^{T_2}(t)e^{-jkw_0T}dt$$
