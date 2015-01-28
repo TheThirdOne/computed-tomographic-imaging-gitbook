@@ -166,6 +166,7 @@ Comparing (22) and (27), we see that in both representations, $$x(t)$$ has been 
 
   If we compute $$z_k$$’s using (25), and then reconstruct $$x(t)$$ from $$z_k$$’s using (22), we will of course obtain the correct values of $$x(t)$$ within $$[T_1, T_2]$$; however, if we insist on carrying out this reconstruction outside $$[T_1, T_2]$$, we will obtain periodic replications of the original $$x(t)$$ (see Fig. 2.7). On the other hand, if $$X(\omega)$$ is used for reconstructing the signal, we will obtain $$x(t)$$ within $$[T_1, T_2]$$ and zero everywhere outside.
 
+![The signal represented by a Fourier series is actually a periodic version of the original signal defined between T, and T2. Here the original function is shown in (a) and the replications caused by the Fourier series representation are shown in (b).](../figures/2-7.png "Figure 2.7")
 
   The continuous Fourier transform defined in (26) may not exist unless $$x(t)$$ satisfies certain conditions, of which the following are typical [Goo68]:
 
