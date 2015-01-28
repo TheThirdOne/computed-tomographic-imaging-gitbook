@@ -132,7 +132,7 @@ This is a discrete approximation to the integral of (17).
 
   Assume that we have a continuous function $$x(t)$$ defined for $$T_1 \leq t \leq T_2$$. This function can be expressed in the following form:
 
-$$x(t) = \sum\limits_{k=-\infty}^\infty z_ke^{jkw_0t}$$
+$$x(t) = \sum\limits_{k=-\infty}^\infty z_ke^{jk\omega_0t}$$
 
 where $$j = \sqrt{-1}$$ and $$w_0 - 2\pi f_0 - 2\pi/T$$, $$T - T_2 - T_1$$, and $$z_k$$ are complex coefficients to be discussed shortly. What is being said here is that $$x(t)$$ is the sum of a number of functions of the form
 
@@ -146,7 +146,38 @@ The two functions on the right-hand side, commonly referred to as sinusoids, are
 
 ![The first three components of a Fourier series are shown. The cosine waves represent the real part of the signal while the sine waves represent the imaginary.](../figures/2-5.png "Figure 2.5")
 
-The coefficients $$z_k$$ in (22) are called the complex amplitude of the $$k$$th
-component, and can be obtained by using the following formula
+The coefficients $$z_k$$ in (22) are called the complex amplitude of the $$k$$th component, and can be obtained by using the following formula
 
 $$z_k = \frac{1}{T}\int_{T_1}^{T_2}(t)e^{-jkw_0T}dt$$
+
+The representation in (22) is called the Fourier Series. To illustrate pictorially the representation in (22), we have shown in Fig. 2.6, a triangular function and some of the components from the expansion.
+
+![The first three components of a Fourier series are shown. The cosine waves represent the real part of the signal while the sine waves represent the imaginary.](../figures/2-6.png "Figure 2.6")
+
+  A continuous signal $$x(t)$$ defined for $$t$$ between $$-\infty$$ and $$\infty$$ also possesses another Fourier representation called the continuous Fourier transform and defined by
+
+$$X(\omega) = \int_{-\infty}^{\infty} x(t)e^{-j\omega t}dt$$
+
+One can show that this relationship may be inverted to yield
+
+$$x(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} X(\omega)e^{-j\omega t}d\omega$$
+
+Comparing (22) and (27), we see that in both representations, $$x(t)$$ has been expressed as a sum of sinusoids, $$e^{j\omega t}$$; the difference being that in the former, the frequencies of the sinusoids are at multiples of $$\omega_0$$, whereas in the latter we have all frequencies between $$-\infty$$ to $$\infty$$. The two representations are not independent of each other. In fact, the series representation is contained in the continuous transform representation since $$z_k$$’s in (25) are similar to $$x(\omega)$$ in (26) for $$\omega = k\omega_0 = k(2\pi/T)$$, especially if we assume that $$x(t)$$ is zero outside $$[T_1, T_2]$$, in which case the range of integration in (27) can be cut down to $$[T_1, T_2]$$. For the case when $$x(t)$$ is zero outside $$[T_1, T_2]$$, the reader might ask that since one can recover $$x(t)$$ from $$z_k$$ using (22), why use (27) since we require $$X(\omega)$$ at frequencies in addition to $$k\omega_0$$’s. The information in $$X(\omega)$$ for $$\omega \neq k_{\omega_0}$$ is necessary to constrain the values of $$x(t)$$ outside the interval $$[T_1, T_2]$$.
+
+  If we compute $$z_k$$’s using (25), and then reconstruct $$x(t)$$ from $$z_k$$’s using (22), we will of course obtain the correct values of $$x(t)$$ within $$[T_1, T_2]$$; however, if we insist on carrying out this reconstruction outside $$[T_1, T_2]$$, we will obtain periodic replications of the original $$x(t)$$ (see Fig. 2.7). On the other hand, if $$X(\omega)$$ is used for reconstructing the signal, we will obtain $$x(t)$$ within $$[T_1, T_2]$$ and zero everywhere outside.
+
+
+  The continuous Fourier transform defined in (26) may not exist unless $$x(t)$$ satisfies certain conditions, of which the following are typical [Goo68]:
+
+1. $$\int_{-\infty}^{\infty}|x(t)|dt < \infty$$ <div></div>
+2. $$g(t)$$ must have only a finite number of discontinuities and a finite number of maxima and minima in any finite interval.
+3. $$g(t)$$ must have no infinite discontinuities.
+
+
+  Some useful mathematical functions, like the Dirac $$\delta$$ function, do not obey the preceding conditions. But if it is possible to represent these functions as limits of a sequence of well-behaved functions that do obey these conditions then the Fourier transforms of the members of this sequence will also form a sequence. Now if this sequence of Fourier transforms possesses a limit, then this limit is called the “generalized Fourier transform” of the original function. Generalized transforms can be manipulated in the same manner as the conventional transforms, and the distinction between the two is generally ignored; it being understood that when a function fails to satisfy the existence conditions and yet is said to have a transform, then the generalized transform is actually meant [Goo68], [Lig60].
+
+  Various transforms described in this section obey many useful properties; these will be shown for the two-dimensional case in Section 2.2.4. Given a relationship for a function of two variables, it is rather easy to suppress one and visualize the one-dimensional case; the opposite is usually not the case.
+
+###Discrete Fourier Transform (DFT)
+
+
