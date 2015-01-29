@@ -181,4 +181,78 @@ Comparing (22) and (27), we see that in both representations, $$x(t)$$ has been 
 
 ###Discrete Fourier Transform (DFT)
 
+  As in the continuous case, a discrete function may also be given a
+frequency domain representation:
 
+$$X(\omega)=\sum\limits_{n = -\infty}^{\infty}x(n\tau)e^{-j\omega n\tau}$$
+
+where $$x(n\tau)$$ are the samples of some continuous function $$x(t)$$, and $$X(\omega)$$ the frequency domain representation for the sampled data. *(In this book we will generally use lowercase letters to represent functions of time or space and the uppercase letters for functions in the frequency domain.)*
+
+  Note that our strategy for introducing the frequency domain representation is opposite of that in the preceding subsection. In describing Fourier series we defined the inverse transform (22), and then described how to compute its coefficients. Now for the DFT we have first described the transform from time into the frequency domain. Later in this section we will describe the inverse transform.
+
+  As will be evident shortly, $$X(\omega)$$ represents the complex amplitude of the sinusoidal component $$e^{j\omega\tau n}$$ of the discrete signal. Therefore, with one important difference, $$X(\omega)$$ plays the same role here as $$z_k$$ in the preceding subsection; the difference being that in the preceding subsection the frequency domain representation was discrete (since it only existed at multiples of the fundamental frequency), while the representation here is continuous as $$X(\omega)$$ is defined for all $$\omega$$.
+
+  For example, assume that
+  
+$$ x(n\tau) =
+\left\{
+ \begin{array}{lr}
+   1 \quad n = 0\\
+  -1 \quad n = 1\\
+   0 \quad elsewhere
+ \end{array}
+\right.
+$$
+
+For this signal
+
+$$X(\omega) = 1 - e^{-j\omega\tau}$$
+
+Note that $$X(\omega)$$ obeys the following periodicity
+
+$$X(\omega) = X(\omega + \frac{2\pi}{\tau})$$
+
+which follows from (28) by simple substitution. In Fig. 2.8 we have shown several periods of this $$X(\omega)$$.
+
+![The discrete Fourier transform (OFT) of a two element sequence is shown here.](../figures/2-8.png "Figure 2.8")
+
+<div></div>$$X(\omega)$$ is called the discrete Fourier transform of the function $$x(n\tau)$$. From the DFT, the function $$x(n\tau)$$ can be recovered by using
+
+$$x(n\tau)=\frac{\tau}{2\pi}\int_{-\pi/\tau}^{\pi/\tau}X(\omega)e^{j\omega n\tau}d\omega$$
+
+which points to the discrete function $$x(n\tau)$$ being a sum (an integral sum, to bemore specific) of sinusoidal components like $$e^{j\omega n\tau}$$.
+
+  An important property of the DFT is that it provides an alternate method for calculating the convolution in (21). Given a pair of sequences $$x_i = x(i\tau)$$ and $$h_i = h(i\tau)$$, their convolution as defined by
+
+$$y_i = \sum\limits_{j=-\infty}^{\infty}x_jh_{i-j}$$
+
+can be calculated from
+
+$$Y(\omega)=X(\omega)H(\omega)$$
+
+This can be derived by noting that the DFT of the convolution is written as
+
+$$Y(\omega) = \sum\limits_{i=-\infty}^{\infty}\left[\sum\limits_{j=-\infty}^{\infty}x_jh_{i-j}\right]e^{-j\omega i\tau}$$
+
+Rewriting the exponential we find
+
+$$Y(\omega) = \sum\limits_{i=-\infty}^{\infty}\left[\sum\limits_{j=-\infty}^{\infty}x_jh_{i-j}\right]e^{-j\omega(i-k+k)\tau}$$
+
+The second summation now can be written as
+
+$$Y(\omega) = \sum\limits_{k=-\infty}^{\infty}x_k e^{-j\omega k\tau} \sum\limits_{m=-\infty}^{\infty}h_m e^{-j\omega m\tau}$$
+
+Note that the limits of the summation remain from $$-\infty$$ to $$\infty$$. At this point itis easy to see that
+
+$$Y(\omega)=X(\omega)H(\omega)$$
+
+A dual to the above relationship can be stated as follows. Let’s multiply two discrete functions, $$x_n$$ and $$y_n$$ , each obtained by sampling the corresponding continuous function with a sampling interval of $$\tau$$ and call the resulting sequence $$z_n$$
+
+$$z_n = x_n y_n$$
+
+Then the DFT of the new sequence is given by the following convolution in
+the frequency domain
+
+$$Z(\omega)=\frac{\tau}{2\pi}\int_{-\pi/\tau}^{\pi/\tau}X(\alpha)Y(\omega - \alpha)d\alpha$$
+
+###Finite Fourier Transform
