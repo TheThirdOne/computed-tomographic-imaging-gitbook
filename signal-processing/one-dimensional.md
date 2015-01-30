@@ -256,3 +256,27 @@ the frequency domain
 $$Z(\omega)=\frac{\tau}{2\pi}\int_{-\pi/\tau}^{\pi/\tau}X(\alpha)Y(\omega - \alpha)d\alpha$$
 
 ###Finite Fourier Transform
+
+  Consider a discrete function
+
+$$x(0),x(\tau),x(2\tau),\cdot\cdot\cdot,x((N-1)\tau)$$
+
+that is $$N$$ elements long. Let’s represent this sequence with the following subscripted notation
+
+$$x_0,x_1,x_2,\>\cdot\cdot\cdot\> x_{N-1}$$
+
+Although the DFT defined in Section 2.1.4 is useful for many theoretical discussions, for practical purposes it is the following transformation, called the finite Fourier transform (FFT), that is actually calculated with a computer:
+
+$$X_u = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_ne^{-j(2\pi/N)un}$$
+
+for $$u = 0, 1, 2,\>\cdot\cdot\cdot, N - 1$$. To explain the meaning of the values $$X_u$$,rewrite (43) as
+
+$$X(u\frac{1}{N\tau}) = \frac{1}{N}\sum\limits_{n=0}^{N-1}x(n\tau)e^{-j2\pi(u(1/N\tau))n\tau}$$
+
+Comparing (44) and (28), we see that the $$X_u$$‘s are the samples of the continuous function $$X(\omega)$$ for
+
+<center>$$\omega = u \frac{1}{N\tau}$$ with $$u = 0, 1, 2,\>\cdot\cdot\cdot, N - 1$$</center>
+
+Therefore, we see that if (43) is used to compute the frequency domain representation of a discrete function, a sampling interval of $$\tau$$ in the $$t$$-domain implies a sampling interval of $$l/N\tau$$ in the frequency domain. The inverse of the relationship shown in (43) is
+
+$$x_n = \sum\limits_{u=0}^{N-1}X_ue^{j(2\pi/N)un},\quad \quad n = 0, 1, 2,\>\cdot\cdot\cdot, N - 1$$
