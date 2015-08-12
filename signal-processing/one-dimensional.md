@@ -1,7 +1,7 @@
 One-Dimensional Signal Processing
 ---------------------------------
 
-###Continuous and Discrete One-Dimensional Functions
+### Continuous and Discrete One-Dimensional Functions
 
   One-dimensional continuous functions, such as in Fig. 2.1(a), will be
 represented in this book by the notation
@@ -44,7 +44,6 @@ $$\int_{-\infty}^{\infty}\delta(t)dt = 1$$
 $$\int_{-\infty}^{\infty}x(t)\delta(t-t')dt = x(t')$$
 
 ![A rectangle function as shown in (a) is scaled in both width and height (b). In the limit the result is the delta function illustrated in (c).](../figures/2-2.png "Figure 2.2")
-
 
 where $$\delta(t-t')$$  is an impulse shifted to the location $$t = t’$$ . When an impulse enters into a product with an arbitrary $$x(t)$$, all the values of $$x(t)$$ outside the location $$t = t’$$ are disregarded. Then by the integral property of the delta function we obtain (7); so we can say that $$\delta(t-t')$$ samples the function $$x(t)$$ at $$t’$$.
 
@@ -116,7 +115,7 @@ $$y_i = \tau \sum\limits_{j=-\infty}^\infty x_jh_{i-j}$$
 
 This is a discrete approximation to the integral of (17).
 
-###Fourier Representation
+### Fourier Representation
 
   For many purposes it is useful to represent functions in the frequency domain. Certainly the most common reason is because it gives a new perspective to an otherwise difficult problem. This is certainly true with the convolution integral; in the time domain convolution is an integral while in the frequency domain it is expressed as a simple multiplication.
   
@@ -179,7 +178,7 @@ Comparing (22) and (27), we see that in both representations, $$x(t)$$ has been 
 
   Various transforms described in this section obey many useful properties; these will be shown for the two-dimensional case in Section 2.2.4. Given a relationship for a function of two variables, it is rather easy to suppress one and visualize the one-dimensional case; the opposite is usually not the case.
 
-###Discrete Fourier Transform (DFT)
+### Discrete Fourier Transform (DFT)
 
   As in the continuous case, a discrete function may also be given a
 frequency domain representation:
@@ -255,7 +254,7 @@ the frequency domain
 
 $$Z(\omega)=\frac{\tau}{2\pi}\int_{-\pi/\tau}^{\pi/\tau}X(\alpha)Y(\omega - \alpha)d\alpha$$
 
-###Finite Fourier Transform
+### Finite Fourier Transform
 
   Consider a discrete function
 
@@ -280,3 +279,80 @@ Comparing (44) and (28), we see that the $$X_u$$‘s are the samples of the cont
 Therefore, we see that if (43) is used to compute the frequency domain representation of a discrete function, a sampling interval of $$\tau$$ in the $$t$$-domain implies a sampling interval of $$l/N\tau$$ in the frequency domain. The inverse of the relationship shown in (43) is
 
 $$x_n = \sum\limits_{u=0}^{N-1}X_ue^{j(2\pi/N)un},\quad \quad n = 0, 1, 2,\>\cdot\cdot\cdot, N - 1$$
+
+  Both (43) and (46) define sequences that are periodically replicated. First consider (43). If the $$u = Nm + i$$ term is calculated then by noting that $$e^{j(2\pi/N)Nm} = 1$$ for all integer values of $$m$$, it is easy to see that
+
+$$X_{Nm+i} = X_i$$
+
+A similar analysis can be made for the inverse case so that
+
+$$x_{Nm+i} = x_i$$
+
+  When the finite Fourier transforms of two sequences are multiplied the result is still a convolution, as it was for the discrete Fourier transform defined in Section 2.1.4, but now the convolution is with respect to replicated sequences. This is often known as circular convolution because of the effect discussed below.
+
+  To see this effect consider the product of two finite Fourier transforms. First write the product of two finite Fourier transforms
+
+$$Z_u = X_uY_u$$
+
+and then take the inverse finite Fourier transform to find
+
+$$z_n = \sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un}X_uY_u$$
+
+Substituting the definition of $$X_u$$ and $$Y_u$$ as given by (43) the product can now be written
+
+$$z_n = \frac{1}{N^2}\sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un}\sum\limits_{i=0}^{N-1}x_ie^{j(2\pi/N)iu}\sum\limits_{k=0}^{N-1}y_ke^{j(2\pi/N)ku}$$
+
+The order of summation can be rearranged and the exponential terms combined to find
+
+$$z_n = \frac{1}{N^2}\sum\limits_{i=0}^{N-1}\sum\limits_{k=0}^{N-1}x_iy_k\sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un-ui-uk}$$
+
+There are two cases to consider. When $$n - i - k \neq 0$$ then as a function of $$u$$ the samples of the exponential $$e^{j(2\pi/N)un-ui-uk}$$ represent an integral number of cycles of a complex sinusoid and their sum is equal to zero. On the other hand, when $$i = n - k$$ then each sample of the exponential is equal to one and thus the summation is equal to $$N$$. The summation in (52) over $$i$$ and $$k$$ represents a sum of all the possible combinations of $$x_i$$ and $$y_k$$. When $$i = n - k$$ then the combination is multiplied by a factor of $$N$$ while when $$i \neq n - k$$ then the term is ignored. This means that the original product of two finite Fourier transforms can be simplified to
+
+$$z_n = \frac{1}{N}\sum\limits_{k=0}^{N-1}x_{n-k}y_k$$
+
+  This expression is very similar to (21) except for the definition of $$x_{n-k}$$ and $$y_k$$ for negative indices. Consider the case when $$n = 0$$. The first term of the summation is equal to $$x_0y_0$$ but the second term is equal to $$x_{-1}y_1$$ . Although in the original formulation of the finite Fourier transform, the x sequence was only specified for indices from $$0$$ through $$N - 1$$, the periodicity property in (48) implies that $$x_{-1}$$ be equal to $$X_{N-1}$$. This leads to the name circular convolution since the undefined portions of the original sequence are replaced by a circular replication of the original data.
+  
+  The effect of circular convolution is shown in Fig. 2.9(a). Here we have shown an exponential sequence convolved with an impulse. The result represents a circular convolution and not samples of the continuous convolution.
+
+  A circular convolution can be turned into an aperiodic convolution by zeropadding the data. As shown in Fig. 2.9(b) if the original sequences are doubled in length by adding zeros then the original $$N$$ samples of the product sequence will represent an aperiodic convolution of the two sequences.
+
+  Efficient procedures for computing the finite Fourier transform are known as fast Fourier transform (FFT) algorithms. To calculate each of the $$N$$ points of the summation shown in (43) requires on the order of $$N^2$$ operations. In a fast Fourier transform algorithm the summation is rearranged to take advantage of common subexpressions and the computational expense is reduced to $$N$$ log $$N$$. For a 1024 point signal this represents an improvement by a factor of approximately 100. The fast Fourier transform algorithm has revolutionized digital signal processing and is described in more detail in [Bri74].
+
+![The effect of circular convolution is shown in (a). (b) shows how the data can be zero-padded so that when an FFT convolution is performed the result represents samples of an aperiodic convolution.](../figures/2-9.png "Figure 2.9")
+
+### Just How Much Data Is Needed
+
+  In Section 2.1.1 we used a sequence of numbers $$x_i$$ to approximate a continuous function $$x(t)$$. An important question is, how finely must the data be sampled for $$x_i$$ to accurately represent the original signal? This question was answered by Nyquist who observed that a signal must be sampled at least twice during each cycle of the highest frequency of the signal. More rigorously, if a signal $$x(t)$$ has a Fourier transform such that
+
+<center>$$X(\omega)=0\quad$$ for $$\omega \geq \frac{\omega_N}{2}$$</center>
+
+then samples of $x$ must be measured at a rate greater than $$\omega_N$$. In other words, if $$T$$ is the interval between consecutive samples, we want $$2\pi/T \geq \omega_N$$. The frequency $$\omega_N$$ is known as the Nyquist rate and represents the minimum frequency at which the data can be sampled without introducing errors.
+
+  Since most real world signals aren’t limited to a small range of frequencies, it is important to know the consequences of sampling at below the Nyquist rate. We can consider the process of sampling to be equivalent to multiplication of the original continuous signal $$x(t)$$ by a sampling function given by
+
+$$h(t) = \sum\limits_{-\infty}^{\infty}\delta(t-iT)$$
+
+The Fourier transform of $$h(t)$$ can be computed from (26) to be
+
+$$H(\omega) = (\frac{2\pi}{T})\sum\limits_{-\infty}^{\infty}\delta(\omega-\frac{2\pi i}{T})$$
+
+By (40) we can convert the multiplication to a convolution in the frequency
+domain. Thus the result of the sampling can be written
+
+$$Z(\omega) = (\frac{2\pi}{T})\sum\limits_{i = -\infty}^{\infty} X(\omega-\frac{2i\pi}{T})$$
+
+This result is diagrammed in Fig. 2.10.
+
+  It is important to realize that when sampling the original data (Fig. 2.10(a)) at a rate faster than that defined by the Nyquist rate, the sampled data are an exact replica of the original signal. This is shown in Fig. 2.10(b). If the sampled signal is filtered such that all frequencies above the Nyquist rate are removed, then the original signal will be recovered.
+
+  On the other hand, as the sampling interval is increased the replicas of the signal in Fig. 2.10(c) move closer together. With a sampling interval greater than that predicted by the Nyquist rate some of the information in the original data has been smeared by replications of the signal at other frequencies and the original signal is unrecoverable. (See Fig. 2.10(d).) The error caused by the sampling process is given by the inverse Fourier transform of the frequency information in the overlap as shown in Fig. 2.10(d). These errors are also known as aliasing.
+
+![Sampling a waveform generates replications of the original Fourier transform of the object at periodic intervals. If the signal is sampled at a frequency of $$\omega$$ then the Fourier transform of the object will be replicated at intervals of $$2\omega$$. (a) shows the Fourier transform of the original signal, (b) shows the Fourier transform when $$x(t)$$ is sampled at a rate faster than the Nyquist rate, (c) when sampled at the Nyquist rate and finally (d) when the data are sampled at a rate less than the Nyquist rate.](../figures/2-10.png "Figure 2.10")
+
+### Interpretations of the FFT Output
+
+  Correct interpretation of the $$X_u$$’s in (43) is obviously important. Toward that goal, it is immediately apparent that $$X_0$$ stands for the average (or, what is more frequently called the dc) component of the discrete function, since from (43)
+
+$$X_0 = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_n$$
+
+Interpretation of $$X_1$$ requires, perhaps, a bit more effort; it stands for 1 cycle per sequence length. This can be made obvious by setting $$X_1 = 1$$, while all other $$X_i$$’s are set equal to 0 in (46). We obtain
