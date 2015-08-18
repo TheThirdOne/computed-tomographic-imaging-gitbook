@@ -358,8 +358,8 @@ $$X_0 = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_n$$
 Interpretation of $$X_1$$ requires, perhaps, a bit more effort; it stands for 1 cycle per sequence length. This can be made obvious by setting $$X_1 = 1$$, while all other $$X_i$$’s are set equal to 0 in (46). We obtain
 
 $$\begin{align}
-x_n & = e^{j2(\pi/N)n} \\\\
-& = cos(\frac{2\pi}{N}) + j\\ sin(\frac{2\pi}{N}) \\\\
+x_n & = e^{j2(\pi/N)n} \\
+& = cos(\frac{2\pi}{N}) + j\ sin(\frac{2\pi}{N}) \\
 \end{align}$$
 
 for $$n = 0,1,2,\cdot\cdot\cdot, N - 1$$. A plot of either the cosine or the sine part of this expression will show just one cycle of the discrete function $$x_n$$, which is why we consider $$X_1$$, as representing one cycle per sequence length. One may similarly show that $$X_2$$ represents two cycles per sequence length. Unfortunately, this straightforward approach for interpreting $$X_u$$ breaks down for $$u \gt N/2$$. For these high values of the index $$u$$, we make use of the following periodicity property
@@ -396,22 +396,22 @@ $$X_{N/2} = X_{-N/2} = \sum\limits_0^{N-1}x_n(-1)^n$$
 
   To display the FFT output with a more natural progression of frequencies, we can, of course, rearrange the output sequence, although if the aim is merely to filter the data, it may not be necessary to do so. In that case the filter transfer function can be rearranged to correspond to the frequency assignments of the elements of the FFT output.
 
-  It is also possible to produce normal-looking FFT outputs (with dc at the center between negative and positive frequencies) by "modulating" the data prior to taking the FFT. Suppose we multiply the data with $$(-1)^n$$ to produce a new sequence $$x_n^{,}$$
+  It is also possible to produce normal-looking FFT outputs (with dc at the center between negative and positive frequencies) by "modulating" the data prior to taking the FFT. Suppose we multiply the data with $$(-1)^n$$ to produce a new sequence $$x_n'$$
 
-$$x_n^{,} = x_n(-1)^n$$
+$$x_n' = x_n(-1)^n$$
 
-Let $$X_u^{,}$$ designate the FFT of this new sequence. Substituting (63) in (43), we obtain
+Let $$X_u'$$ designate the FFT of this new sequence. Substituting (63) in (43), we obtain
 
-$$X_u^{,} = X_{u - N/2}$$
+$$X_u' = X_{u - N/2}$$
 
 for $$u = 0,1,2,\cdot\cdot\cdot, N - 1$$. This implies the following equivalences
 
 $$\begin{align}
-X_0^{,} & = X_{-N/2} \\
-X_1^{,} & = X_{-N/2+1} \\
-X_2^{,} & = X_{-N/2+2} \\
-X_{N/2}^{,} & = X_{0} \\
-X_{N-1}^{,} & = X_{N/2-1} \\
+X_0' & = X_{-N/2} \\
+X_1' & = X_{-N/2+1} \\
+X_2' & = X_{-N/2+2} \\
+X_{N/2}' & = X_{0} \\
+X_{N-1}' & = X_{N/2-1} \\
 \end{align}$$
 
 ### How to Increase the Display Resolution in the Frequency Domain
@@ -419,3 +419,76 @@ X_{N-1}^{,} & = X_{N/2-1} \\
   The right column of Fig. 2.12 shows the magnitude of the FFT output (the dc is centered) of the sequence that represents a rectangular function as shown in the left column. As was mentioned before, the Fourier transform of a discrete sequence contains all frequencies, although it is periodic, and the FFT output represents the samples of one period. For many situations, the frequency domain samples supplied by the FFT, although containing practically all the information for the reconstruction of the continuous Fourier transform, are hard to interpret visually. This is evidenced by Fig. 2.12(a), where for part of the display we have only one sample associated with an oscillation in the frequency domain. It is possible to produce smootherlooking outputs by what is called zero-padding the data before taking the FFT. For example, if the sequence of Fig. 2.12(a) is extended with zeros to twice its length, the FFT of the resulting 32 element sequence will be as shown in Fig. 2.12(b), which is visually smoother looking than the pattern in Fig. 2.12(a). If we zero-pad the data to four times its original length, the output is as shown in Fig. 2.12(c).
 
 ![As shown here, padding a sequence of data with zeros increases the resolution in the frequency domain. The sequence in (a) has only 16 points, (b) has 32 points, while (c) has 64 points.](../figures/2-12.png "Figure 2.12")
+
+  That zero-padding a data sequence yields frequency domain points that are more closely spaced can be shown by the following derivation. Again let $$x_1, x_2, \cdot\cdot\cdot, x_{N-i}$$ represent the original data. By zero-padding the data we will define a new $$x'$$ sequence:
+
+$$\begin{align}
+x_n' & = x_n && \textrm{for}\ n = 0, 1, 2, \cdot\cdot\cdot, N-1 \\
+& = 0 && \textrm{for}\ n = N, N + 1,N + 2, \cdot\cdot\cdot, 2N-1 \\
+\end{align}$$
+
+Let $$X_u'$$ be the FFT of the new sequence $$x_n'$$. Therefore,
+
+$$X_u' = \sum\limits_0^{2N-1}x_n'e^{-j(2\pi/2N)un}$$
+
+which in terms of the original data is equal to
+
+$$X_u' = \sum\limits_0^{N-1}x_ne^{-j(2\pi/2N)un}$$
+
+If we evaluate this expression at even values of $$u$$, that is when
+
+$$u = 2m \quad \textrm{where}\ m = 0, 1, 2, \cdot\cdot\cdot, N-1$$
+
+we get
+
+$$\begin{align}
+X_{2m}' &= \sum\limits_0^{N-1}x_ne^{-j(2\pi/2N)mn}\\
+&= X_m\\
+\end{align}$$
+
+In Fig. 2.13 is illustrated the equality between the even-numbered elements of the new transform and the original transform. That $$X_1', X_3', \cdot\cdot\cdot,$$ etc. are the interpolated values between $$X_0$$ and $$X_1$$; between $$X_1$$ and $$X_2$$; etc. can be seen from the summations in (43) and (74) written in the following form
+
+$$X_u' = X'(m\frac{2\pi}{2N\tau}) = \sum\limits_{n=0}^{N-1}x(n\tau)e^{-j((2\pi/2N\tau)m)n\tau}$$
+
+$$X_u = X(m\frac{2\pi}{N\tau}) = \sum\limits_{n=0}^{N-1}x(n\tau)e^{-j(2\pi m/N\tau)n\tau}$$
+
+Comparing the two summations, we see that the upper one simply represents
+the sampled DFT with half the sampling interval.
+
+![When a data sequence is padded with zeros the effect is to increase the resolution in the frequency domain. The points in (a) are also in the longer sequence shown in (b), but there are additional points, as indicated circles, that provide interpolated values of the FFT. ](../figures/2-13.png "Figure 2.13")
+
+  So we have the following conclusion: to increase the display resolution in the frequency domain, we must zero-extend the time domain signal. This also means that if we are comparing the transforms of sequences of _different_ lengths, they must all be zero-extended to the _same_ number, so that they are all plotted with the same display resolution. This is because the upper summation, (79), has a sampling interval in the frequency domain of $$2\pi/2N\tau$$ while the lower summation, (BO), has a sampling interval that is twice as long or $$2\pi/N\tau$$.
+
+### How to Deal with Data Defined for Negative Time
+
+Since the forward and the inverse FFT relationships, (43) and (46), are symmetrical, the periodicity property described in (62) also applies in time domain. What is being said here is that if a time domain sequence and its transform obey (43) and (46), then an $$N$$ element data sequence in the time domain must satisfy the following property
+
+$$x_{-n}=x_{N-n}$$
+
+To explain the implications of this property, consider the case of $$N = 8$$, for which the data sequence may be written down as
+
+$$x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7$$
+
+By the property under discussion, this sequence should be interpreted as
+
+$$x_0, x_1, x_2, x_3, x_4 (\textrm{or}\ x_{-4}), x_{-3}, x_{-2}, x_{-1}$$
+
+Then if our data are defined for negative indices (times), and, say, are of the following form
+
+$$x_{-3}, x_{-2}, x_{-1}, x_0, x_1, x_2, x_3, x_4$$
+
+they should be fed into an FFT program as
+
+$$x_0, x_1, x_2, x_3, x_4, x_{-3}, x_{-2}, x_{-1}$$
+
+  To further drive home the implications of the periodicity property in (62), consider the following example, which consists of taking an 8 element FFT of the data
+
+$$0.9\ 0.89\ 0.88\ 0.87\ 0.86\ 0.85\ 0.84\ 0.83$$
+
+We insist for the sake of explaining a point, that only an 8 element FFT be taken. If the given data have no association with time, then the data should be fed into the program as they are presented. However, if it is definitely known that the data are ZERO before the first element, then the sequence presented to the FFT program should look like
+
+![Latex rendering](../figures/2-latex.png)
+
+This sequence represents the given fact that at $$t$$ = -1, -2 and -3 the data are supposed to be zero. Also, since the fifth element represents both $$x_4$$ and $$x_{-4}$$ (these two elements are supposed to be equal for ideal data), and since in the given data the element $$x_{-4}$$ is zero, we simply replace the fifth element by the average of the two. Note that in the data fed into the FFT program, the sharp discontinuity at the origin, as represented by the transition from 0 to 0.9, has been retained. This discontinuity will contribute primarily to the high frequency content of the transform of the signal.
+
+### How to Increase Frequency Domain Display Resolution of Signals Defined for Negative Time
