@@ -356,3 +356,66 @@ This result is diagrammed in Fig. 2.10.
 $$X_0 = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_n$$
 
 Interpretation of $$X_1$$ requires, perhaps, a bit more effort; it stands for 1 cycle per sequence length. This can be made obvious by setting $$X_1 = 1$$, while all other $$X_i$$’s are set equal to 0 in (46). We obtain
+
+$$\begin{align}
+x_n & = e^{j2(\pi/N)n} \\\\
+& = cos(\frac{2\pi}{N}) + j\\ sin(\frac{2\pi}{N}) \\\\
+\end{align}$$
+
+for $$n = 0,1,2,\cdot\cdot\cdot, N - 1$$. A plot of either the cosine or the sine part of this expression will show just one cycle of the discrete function $$x_n$$, which is why we consider $$X_1$$, as representing one cycle per sequence length. One may similarly show that $$X_2$$ represents two cycles per sequence length. Unfortunately, this straightforward approach for interpreting $$X_u$$ breaks down for $$u \gt N/2$$. For these high values of the index $$u$$, we make use of the following periodicity property
+
+$$X_{-u}=X_{N-u}$$
+
+which is easily proved by substitution in (43). For further explanation, consider now a particular value for $$N$$, say 8. We already know that
+
+From the periodicity property we can now add the following
+
+```
+$$X_0$$ represents dc
+$$X_1$$ represents 1 cycle per sequence length
+$$X_2$$ represents 2 cycles per sequence length
+$$X_3$$ represents 3 cycles per sequence length
+$$X_4$$ represents 4 cycles per sequence length.
+
+From the periodicity property we can now add the following
+
+$$X_5$$ represents - 3 cycles per sequence length
+$$X_6$$ represents - 2 cycles per sequence length
+$$X_7$$ represents - 1 cycle per sequence length.
+
+```
+
+Note that we could also have added "$$X_4$$ represents - 4 cycles per sequence length." The fact is that for any $$N$$ element sequence, $$X_{N/2}$$ will always be equal to $$X_{-N/2}$$ since from (43)
+
+$$X_{N/2} = X_{-N/2} = \sum\limits_0^{N-1}x_n(-1)^n$$
+
+
+  The discussion is diagrammatically represented by Fig. 2.11, which shows that when an $$N$$ element data sequence is fed into an FFT program, the output sequence, also $$N$$ elements long, consists of the dc frequency term, followed by positive frequencies and then by negative frequencies. This type of an output where the negative axis information follows the positive axis information is somewhat unnatural to look at.
+
+![The output of an 8 element FFT is shown here.](../figures/2-11.png "Figure 2.11")
+
+  To display the FFT output with a more natural progression of frequencies, we can, of course, rearrange the output sequence, although if the aim is merely to filter the data, it may not be necessary to do so. In that case the filter transfer function can be rearranged to correspond to the frequency assignments of the elements of the FFT output.
+
+  It is also possible to produce normal-looking FFT outputs (with dc at the center between negative and positive frequencies) by "modulating" the data prior to taking the FFT. Suppose we multiply the data with $$(-1)^n$$ to produce a new sequence $$x_n^{,}$$
+
+$$x_n^{,} = x_n(-1)^n$$
+
+Let $$X_u^{,}$$ designate the FFT of this new sequence. Substituting (63) in (43), we obtain
+
+$$X_u^{,} = X_{u - N/2}$$
+
+for $$u = 0,1,2,\cdot\cdot\cdot, N - 1$$. This implies the following equivalences
+
+$$\begin{align}
+X_0^{,} & = X_{-N/2} \\
+X_1^{,} & = X_{-N/2+1} \\
+X_2^{,} & = X_{-N/2+2} \\
+X_{N/2}^{,} & = X_{0} \\
+X_{N-1}^{,} & = X_{N/2-1} \\
+\end{align}$$
+
+### How to Increase the Display Resolution in the Frequency Domain
+
+  The right column of Fig. 2.12 shows the magnitude of the FFT output (the dc is centered) of the sequence that represents a rectangular function as shown in the left column. As was mentioned before, the Fourier transform of a discrete sequence contains all frequencies, although it is periodic, and the FFT output represents the samples of one period. For many situations, the frequency domain samples supplied by the FFT, although containing practically all the information for the reconstruction of the continuous Fourier transform, are hard to interpret visually. This is evidenced by Fig. 2.12(a), where for part of the display we have only one sample associated with an oscillation in the frequency domain. It is possible to produce smootherlooking outputs by what is called zero-padding the data before taking the FFT. For example, if the sequence of Fig. 2.12(a) is extended with zeros to twice its length, the FFT of the resulting 32 element sequence will be as shown in Fig. 2.12(b), which is visually smoother looking than the pattern in Fig. 2.12(a). If we zero-pad the data to four times its original length, the output is as shown in Fig. 2.12(c).
+
+![As shown here, padding a sequence of data with zeros increases the resolution in the frequency domain. The sequence in (a) has only 16 points, (b) has 32 points, while (c) has 64 points.](../figures/2-12.png "Figure 2.12")
