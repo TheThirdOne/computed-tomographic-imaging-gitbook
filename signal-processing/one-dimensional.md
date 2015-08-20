@@ -492,3 +492,54 @@ We insist for the sake of explaining a point, that only an 8 element FFT be take
 This sequence represents the given fact that at $$t$$ = -1, -2 and -3 the data are supposed to be zero. Also, since the fifth element represents both $$x_4$$ and $$x_{-4}$$ (these two elements are supposed to be equal for ideal data), and since in the given data the element $$x_{-4}$$ is zero, we simply replace the fifth element by the average of the two. Note that in the data fed into the FFT program, the sharp discontinuity at the origin, as represented by the transition from 0 to 0.9, has been retained. This discontinuity will contribute primarily to the high frequency content of the transform of the signal.
 
 ### How to Increase Frequency Domain Display Resolution of Signals Defined for Negative Time
+
+Let’s say that we have an eight element sequence of data defined for both positive and negative times as follows:
+
+$$x_{-3}\ x_{-2}\ x_{-1}\ x_0\ x_1\ x_2\ x_3\ x_4$$
+
+It can be fed into an FFT algorithm after it is rearranged to look like
+
+$$x_0\ x_1\ x_2\ x_3\ x_4\ x_{-3}\ x_{-2}\ x_{-1}$$
+
+If $$x_{-4}$$ was also defined in the original sequence, we have three options: we can either ignore $$x_{-4}$$, or ignore $$x_4$$ and retain $$x_{-4}$$ for the fifth from left position in the above sequence, or, better yet, use $$(x_{-4} + x_4)/2$$ for the fifth position. Note we are making use of the property that due to the data periodicity properties assumed by the FFT algorithm, the fifth element corresponds to both $$x_4$$ and $$x_{-4}$$ and in the ideal case they are supposed to be equal to each other.
+
+  Now suppose we wish to double the display resolution in the frequency domain; we must then zero-extend the data as follows
+
+$$x_0\ x_1\ x_2\ x_3\ x_4\ 0\ 0\ 0\ 0\ 0\ 0\ 0\ x_{-3}\ x_{-2}\ x_{-1}$$
+
+Note that we have now given separate identities to $$x_4$$ and $$x_{-4}$$, since they don’t have to be equal to each other anymore. So if they are separately available, they can be used as such.
+
+### Data Truncation Effects
+
+  To see the data truncation effects, consider a signal defined for all indices $$n$$. If $$X(\omega)$$ is the true DFT of this signal, we have
+
+$$X(\omega)=\sum\limits_{-\infty}^{\infty}x_ne^{-j\omega n T_s}$$
+
+Suppose we decide to take only a 16 element transform, meaning that of all
+the $$x_n$$'s, we will retain only 16.
+
+  Assuming that the most significant transitions of the signal occur in the base interval defined by $$n$$ going from - 7 to 8, we may write approximately
+  
+$$X(\omega)=\sum\limits_{-7}^{8}x_ne^{-j\omega n T_s}$$
+
+More precisely, if $$X'(\omega)$$ denotes the DFT of the truncated data, we may write
+
+$$\begin{align}
+X'(\omega) &= \sum\limits_{-7}^{8}x_ne^{-j\omega n T_s}\\
+&= \sum\limits_{-\infty}^{\infty}x_nI_{16}(n)e^{-j\omega n I_s} \\
+\end{align}$$
+
+where $$I_{16}(n)$$ is a function that is equal to 1 for $$n$$ between -7 and 8, and zero outside. By the convolution theorem
+
+$$X'(\omega)=\frac{T_s}{2\pi}X(\omega)*A(\omega)$$
+
+where
+
+$$\begin{align}
+A(\omega) &= \sum\limits_{-7}^{8}e^{-j\omega n T_s}\\
+&= e^{-j\omega T_s/2}\frac{sin\frac{\omega N T_s}{2}}{sin\frac{\omega T_s}{2}}\\
+\end{align}$$
+
+with $$N$$ = 16. This function is displayed in Fig. 2.14, and illustrates the nature of distortion introduced by data truncation.
+
+![Truncating a sequence of data is equivalent to multiplying it by a rectangular window. The result in the frequency domain is to convolve the Fourier transform of the signal with the window shown above.](../figures/2-14.png "Figure 2.14")
