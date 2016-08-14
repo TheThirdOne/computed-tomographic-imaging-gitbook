@@ -1,0 +1,30 @@
+p, h3, ol {
+  padding-left: 20%;
+}
+
+.img-container {
+  display: flex;
+  flex direction: row;
+}
+
+.caption {
+  width: 20%;
+}
+
+img {
+}
+
+th {
+  font-weight: bold;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px 13px;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-left:20%;
+}
