@@ -67,10 +67,10 @@ explanation leads to the definition of the Dirac delta function that follows
 \int_{-\infty}^{\infty}\delta(t)dt = 1
 ```
 
-  The delta function has the following “sampling” property
+  The delta function has the following "sampling" property
 
 ```
-\int_{-\infty}^{\infty}x(t)\delta(t-t')dt = x(t')
+\int_{-\infty}^{\infty}x(t)\delta(t-t')dt = x(t') \label{eq:sampling}
 ```
 
 ![A rectangle function as shown in (a) is scaled in both width and height (b). In the limit the result is the delta function illustrated in (c).](../figures/2-2.png "Figure 2.2")
@@ -78,7 +78,7 @@ explanation leads to the definition of the Dirac delta function that follows
 where `\delta(t-t')`  is an impulse shifted to the location `t = t'`. When
 an impulse enters into a product with an arbitrary `x(t)`, all the values
 of `x(t)` outside the location `t = t'` are disregarded. Then by the integral
-property of the delta function we obtain (7); so we can say that `\delta(t-t')`
+property of the delta function we obtain `\eqref{eq:sampling}`; so we can say that `\delta(t-t')`
 samples the function `x(t)` at `t'`.
 
 ### Linear Operations
@@ -103,7 +103,7 @@ functions `x(t)` and `y(t)`.
 integral form
 
 ```
-z(t)=\int_{-\infty}^{\infty}x(t')h(t,t')dt'
+z(t)=\int_{-\infty}^{\infty}x(t')h(t,t')dt' \label{eq:intform}
 ```
 
 where `h` is called the impulse response. It is easily shown that `h` is
@@ -114,10 +114,13 @@ the input function is an impulse at `t = t_0` or
 x(t)=\delta(t-t_0)
 ```
 
-Substituting into (10), we obtain
+Substituting into `\eqref{eq:intform}`, we obtain
 
 ```
-z(t)=\int_{-\infty}^{\infty}\delta(t-t_0)h(t,t')dt'
+\begin{align}
+z(t) & = \int_{-\infty}^{\infty}\delta(t-t_0)h(t,t')dt' \\
+     & = h(t, t_0)
+\end{align}
 ```
 
 Therefore `h(t, t')` can be called the impulse response for the impulse
@@ -148,10 +151,10 @@ merely shifted by the same amount.
 
 ![The impulse response of a shift invariant filter is shown convolved with three impulses.](../figures/2-3.png "Figure 2.3")
 
-  For shift invariant operations, the integral form in (10) becomes
+  For shift invariant operations, the integral form in `\eqref{eq:intform}` becomes
   
 ```
-z(t)=\int_{-\infty}^{\infty}x(t')h(t-t')dt'
+z(t)=\int_{-\infty}^{\infty}x(t')h(t-t')dt \label{eq:shift}'
 ```
   
 This is now called a convolution and is represented by
@@ -184,7 +187,7 @@ then the convolution of `x_i` with `y_i` can be written as
 y_i = \tau \sum\limits_{j=-\infty}^\infty x_jh_{i-j}
 ```
 
-This is a discrete approximation to the integral of (17).
+This is a discrete approximation to the integral of `\eqref{eq:shift}`.
 
 ### Fourier Representation
 
@@ -223,33 +226,33 @@ and `z_k` are complex coefficients to be discussed shortly. What is being
 said here is that `x(t)` is the sum of a number of functions of the form
 
 ```
-e^{jkw_0t}
+e^{jkw_0t} \label{eq:sum-term}
 ```
 
 This function represents
 
 ```
-e^{jkw_0t} = cos (kw_0t) + j\>sin (kw_0t)
+e^{jkw_0t} = cos (kw_0t) + j\>sin (kw_0t) \label{eq:sinusoids}
 ```
 
 The two functions on the right-hand side, commonly referred to as sinusoids,
 are oscillatory with `kf_0` cycles per unit of `t` as illustrated by Fig.
 2.5. `kf_0` is called the frequency of the sinusoids. Note that the
-sinusoids in (24) are at multiples of the frequency `f_0`, which is called
-the fundamental frequency.
+sinusoids in `\eqref{eq:sinusoids}` are at multiples of the frequency `f_0`, which
+is called the fundamental frequency.
 
 ![The first three components of a Fourier series are shown. The cosine waves represent the real part of the signal while the sine waves represent the imaginary.](../figures/2-5.png "Figure 2.5")
 
-The coefficients `z_k` in (22) are called the complex amplitude of
-the `k`th component, and can be obtained by using the following formula
+The coefficients `z_k` in `\eqref{eq:sum-term}` are called the complex amplitude
+of the `k`th component, and can be obtained by using the following formula
 
 ```
-z_k = \frac{1}{T}\int_{T_1}^{T_2}(t)e^{-jkw_0T}dt
+z_k = \frac{1}{T}\int_{T_1}^{T_2}(t)e^{-jkw_0T}dt \label{eq:coeff-zk}
 ```
 
-The representation in (22) is called the Fourier Series. To illustrate
-pictorially the representation in (22), we have shown in Fig. 2.6, a
-triangular function and some of the components from the expansion.
+The representation in `\eqref{eq:sum-term}` is called the Fourier Series. To
+illustrate pictorially the representation in `\eqref{eq:sum-term}`, we have shown
+in Fig. 2.6, a triangular function and some of the components from the expansion.
 
 ![The first three components of a Fourier series are shown. The cosine waves represent the real part of the signal while the sine waves represent the imaginary.](../figures/2-6.png "Figure 2.6")
 
@@ -258,46 +261,46 @@ also possesses another Fourier representation called the continuous Fourier
 transform and defined by
 
 ```
-X(\omega) = \int_{-\infty}^{\infty} x(t)e^{-j\omega t}dt
+X(\omega) = \int_{-\infty}^{\infty} x(t)e^{-j\omega t}dt \label{eq:cont-fourier}
 ```
 
 One can show that this relationship may be inverted to yield
 
 ```
-x(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} X(\omega)e^{-j\omega t}d\omega
+x(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} X(\omega)e^{-j\omega t}d\omega \label{eq:inverted-fourier}
 ```
 
-Comparing (22) and (27), we see that in both representations, `x(t)` has
-been expressed as a sum of sinusoids, `e^{j\omega t}`; the difference being
-that in the former, the frequencies of the sinusoids are at multiples
-of `\omega_0`, whereas in the latter we have all frequencies between `-\infty`
+Comparing `\eqref{eq:sum-term}` and `\eqref{eq:inverted-fourier}`, we see that in
+both representations, `x(t)` has been expressed as a sum of sinusoids, `e^{j\omega t}`;
+the difference being that in the former, the frequencies of the sinusoids are at
+multiples of `\omega_0`, whereas in the latter we have all frequencies between
+`-\infty`to `\infty`. The two representations are not independent of each other.
+In fact, the series representation is contained in the continuous transform
+representation since `z_k`'s in `\eqref{eq:coeff-zk}` are similar to `x(\omega)` in
+`\eqref{eq:cont-fourier}` for `\omega = k\omega_0 = k(2\pi/T)`, especially if we
+assume that `x(t)` is zero outside `[T_1, T_2]`, in which case the range of
+integration in `\eqref{eq:inverted-fourier}` can be cut down to `[T_1, T_2]`. For
+the case when `x(t)` is zero outside `[T_1, T_2]`, the reader might ask that since
+one can recover `x(t)` from `z_k` using `\eqref{eq:sum-term}`, why use `\eqref{eq:inverted-fourier}`
+since we require `X(\omega)` at frequencies in addition to `k\omega_0`'s. The
+information in `X(\omega)` for `\omega \neq k_{\omega_0}` is necessary to
+constrain the values of `x(t)` outside the interval `[T_1, T_2]`.
 
-to `\infty`. The two representations are not independent of each other. In
-fact, the series representation is contained in the continuous transform
-representation since `z_k`'s in (25) are similar to `x(\omega)` in (26)
-for `\omega = k\omega_0 = k(2\pi/T)`, especially if we assume that `x(t)`
-is zero outside `[T_1, T_2]`, in which case the range of integration in (27)
-can be cut down to `[T_1, T_2]`. For the case when `x(t)` is zero
-outside `[T_1, T_2]`, the reader might ask that since one can recover `x(t)`
-from `z_k` using (22), why use (27) since we require `X(\omega)` at frequencies
-in addition to `k\omega_0`'s. The information in `X(\omega)` for `\omega \neq k_{\omega_0}`
-is necessary to constrain the values of `x(t)` outside
-the interval `[T_1, T_2]`.
-
-  If we compute `z_k`'s using (25), and then reconstruct `x(t)` from `z_k`'s
-using (22), we will of course obtain the correct values of `x(t)`
-within `[T_1, T_2]`; however, if we insist on carrying out this
-reconstruction outside `[T_1, T_2]`, we will obtain periodic replications of
-the original `x(t)` (see Fig. 2.7). On the other hand, if `X(\omega)` is
-used for reconstructing the signal, we will obtain `x(t)`
-within `[T_1,T_2]` and zero everywhere outside.
+  If we compute `z_k`'s using `\eqref{eq:coeff-zk}`, and then reconstruct `x(t)`
+from `z_k`'s using `\eqref{eq:sum-term}`, we will of course obtain the correct
+values of `x(t)` within `[T_1, T_2]`; however, if we insist on carrying out this
+reconstruction outside `[T_1, T_2]`, we will obtain periodic replications of the
+original `x(t)` (see Fig. 2.7). On the other hand, if `X(\omega)` is used for
+reconstructing the signal, we will obtain `x(t)` within `[T_1,T_2]` and zero
+everywhere outside.
 
 ![The signal represented by a Fourier series is actually a periodic version of the original signal defined between T, and T2. Here the original function is shown in (a) and the replications caused by the Fourier series representation are shown in (b).](../figures/2-7.png "Figure 2.7")
 
-  The continuous Fourier transform defined in (26) may not exist unless `x(t)`
-satisfies certain conditions, of which the following are typical [Goo68]:
+  The continuous Fourier transform defined in `\eqref{eq:cont-fourier}` may not
+exist unless `x(t)` satisfies certain conditions, of which the following are
+typical [Goo68]:
 
-1. `\int_{-\infty}^{\infty}|x(t)|dt < \infty` <div></div>
+1. `\int_{-\infty}^{\infty}|x(t)|dt < \infty`
 2. `g(t)` must have only a finite number of discontinuities and a finite number of maxima and minima in any finite interval.
 3. `g(t)` must have no infinite discontinuities.
 
@@ -326,7 +329,7 @@ case.
 frequency domain representation:
 
 ```
-X(\omega)=\sum\limits_{n = -\infty}^{\infty}x(n\tau)e^{-j\omega n\tau}
+X(\omega)=\sum\limits_{n = -\infty}^{\infty}x(n\tau)e^{-j\omega n\tau} \label{eq:freq-dom-rep}
 ```
 
 where `x(n\tau)` are the samples of some continuous function `x(t)`,
@@ -337,7 +340,7 @@ domain.)*
 
   Note that our strategy for introducing the frequency domain representation is
 opposite of that in the preceding subsection. In describing Fourier series we
-defined the inverse transform (22), and then described how to compute its
+defined the inverse transform `\eqref{eq:sum-term}`, and then described how to compute its
 coefficients. Now for the DFT we have first described the transform from time
 into the frequency domain. Later in this section we will describe the inverse
 transform.
@@ -376,7 +379,8 @@ Note that `X(\omega)` obeys the following periodicity
 X(\omega) = X(\omega + \frac{2\pi}{\tau})
 ```
 
-which follows from (28) by simple substitution. In Fig. 2.8 we have shown several periods of this `X(\omega)`.
+which follows from `\eqref{eq:freq-dom-rep}` by simple substitution. In Fig. 2.8
+we have shown several periods of this `X(\omega)`.
 
 ![The discrete Fourier transform (OFT) of a two element sequence is shown here.](../figures/2-8.png "Figure 2.8")
 
@@ -391,11 +395,11 @@ which points to the discrete function `x(n\tau)` being a sum (an integral
 sum, to bemore specific) of sinusoidal components like `e^{j\omega n\tau}`.
 
   An important property of the DFT is that it provides an alternate method for
-calculating the convolution in (21). Given a pair of sequences `x_i = x(i\tau)`
+calculating the convolution in `\eqref{eq:convolution}`. Given a pair of sequences `x_i = x(i\tau)`
 and `h_i = h(i\tau)`, their convolution as defined by
 
 ```
-y_i = \sum\limits_{j=-\infty}^{\infty}x_jh_{i-j}
+y_i = \sum\limits_{j=-\infty}^{\infty}x_jh_{i-j} \label{eq:convolution}
 ```
 
 can be calculated from
@@ -442,7 +446,7 @@ Then the DFT of the new sequence is given by the following convolution in
 the frequency domain
 
 ```
-Z(\omega)=\frac{\tau}{2\pi}\int_{-\pi/\tau}^{\pi/\tau}X(\alpha)Y(\omega - \alpha)d\alpha
+Z(\omega)=\frac{\tau}{2\pi}\int_{-\pi/\tau}^{\pi/\tau}X(\alpha)Y(\omega - \alpha)d\alpha \label{eq:DFT-freq}
 ```
 
 ### Finite Fourier Transform
@@ -466,34 +470,36 @@ the finite Fourier transform (FFT), that is actually calculated with a
 computer:
 
 ```
-X_u = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_ne^{-j(2\pi/N)un}
+X_u = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_ne^{-j(2\pi/N)un} \label{eq:finite-fourier}
 ```
 
 for `u = 0, 1, 2,\>\cdot\cdot\cdot, N - 1`. To explain the meaning of the
-values `X_u`,rewrite (43) as
+values `X_u`,rewrite `\eqref{eq:finite-fourier}` as
 
 ```
-X(u\frac{1}{N\tau}) = \frac{1}{N}\sum\limits_{n=0}^{N-1}x(n\tau)e^{-j2\pi(u(1/N\tau))n\tau}
+X(u\frac{1}{N\tau}) = \frac{1}{N}\sum\limits_{n=0}^{N-1}x(n\tau)e^{-j2\pi(u(1/N\tau))n\tau} \label{eq:altered-f-f}
 ```
 
-Comparing (44) and (28), we see that the `X_u`‘s are the samples of the
+Comparing `\eqref{eq:altered-f-f}` and `\eqref{eq:freq-dom-rep}`, we see that the `X_u`‘s are the samples of the
 continuous function `X(\omega)` for
 
-<center>`\omega = u \frac{1}{N\tau}` with `u = 0, 1, 2,\>\cdot\cdot\cdot, N - 1`</center>
+```
+\omega = u \frac{1}{N\tau}\quad \textrm{with}\ u = 0, 1, 2,\>\cdot\cdot\cdot, N - 1
+```
 
-Therefore, we see that if (43) is used to compute the frequency domain
+Therefore, we see that if `\eqref{eq:finite-fourier}` is used to compute the frequency domain
 representation of a discrete function, a sampling interval of `\tau` in
 the `t`-domain implies a sampling interval of `l/N\tau` in the frequency
-domain. The inverse of the relationship shown in (43) is
+domain. The inverse of the relationship shown in `\eqref{eq:finite-fourier}` is
 
 ```
-x_n = \sum\limits_{u=0}^{N-1}X_ue^{j(2\pi/N)un},\quad \quad n = 0, 1, 2,\>\cdot\cdot\cdot, N - 1
+x_n = \sum\limits_{u=0}^{N-1}X_ue^{j(2\pi/N)un},\quad \quad n = 0, 1, 2,\>\cdot\cdot\cdot, N - 1 \label{eq:inverse-fft}
 ```
 
-  Both (43) and (46) define sequences that are periodically replicated. First
-consider (43). If the `u = Nm + i` term is calculated then by noting
-that `e^{j(2\pi/N)Nm} = 1` for all integer values of `m`, it is easy to see
-that
+  Both `\eqref{eq:finite-fourier}` and `\eqref{eq:inverse-fft}` define sequences
+that are periodically replicated. First consider `\eqref{eq:finite-fourier}`. If
+the `u = Nm + i` term is calculated then by noting that `e^{j(2\pi/N)Nm} = 1` for
+all integer values of `m`, it is easy to see that
 
 ```
 X_{Nm+i} = X_i
@@ -515,7 +521,7 @@ discussed below.
 First write the product of two finite Fourier transforms
 
 ```
-Z_u = X_uY_u
+Z_u = X_uY_u \label{eq:inverse-case}
 ```
 
 and then take the inverse finite Fourier transform to find
@@ -524,8 +530,8 @@ and then take the inverse finite Fourier transform to find
 z_n = \sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un}X_uY_u
 ```
 
-Substituting the definition of `X_u` and `Y_u` as given by (43) the
-product can now be written
+Substituting the definition of `X_u` and `Y_u` as given by `\eqref{eq:finite-fourier}`
+the product can now be written
 
 ```
 z_n = \frac{1}{N^2}\sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un}\sum\limits_{i=0}^{N-1}x_ie^{j(2\pi/N)iu}\sum\limits_{k=0}^{N-1}y_ke^{j(2\pi/N)ku}
@@ -535,7 +541,7 @@ The order of summation can be rearranged and the exponential terms combined to
 find
 
 ```
-z_n = \frac{1}{N^2}\sum\limits_{i=0}^{N-1}\sum\limits_{k=0}^{N-1}x_iy_k\sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un-ui-uk}
+z_n = \frac{1}{N^2}\sum\limits_{i=0}^{N-1}\sum\limits_{k=0}^{N-1}x_iy_k\sum\limits_{u=0}^{N-1}e^{j(2\pi/N)un-ui-uk} \label{eq:rearranged-sum}
 ```
 
 There are two cases to consider. When `n - i - k \neq 0` then as a function
@@ -543,23 +549,23 @@ of `u` the samples of the exponential `e^{j(2\pi/N)un-ui-uk}` represent an
 integral number of cycles of a complex sinusoid and their sum is equal to
 zero. On the other hand, when `i = n - k` then each sample of the
 exponential is equal to one and thus the summation is equal to `N`. The
-summation in (52) over `i` and `k` represents a sum of all the possible
-combinations of `x_i` and `y_k`. When `i = n - k` then the combination
-is multiplied by a factor of `N` while when `i \neq n - k` then the term
-is ignored. This means that the original product of two finite Fourier
+summation in `\eqref{eq:rearranged-sum}` over `i` and `k` represents a sum of all
+the possible combinations of `x_i` and `y_k`. When `i = n - k` then the
+combination is multiplied by a factor of `N` while when `i \neq n - k` then the
+term is ignored. This means that the original product of two finite Fourier
 transforms can be simplified to
 
 ```
 z_n = \frac{1}{N}\sum\limits_{k=0}^{N-1}x_{n-k}y_k
 ```
 
-  This expression is very similar to (21) except for the definition
-of `x_{n-k}` and `y_k` for negative indices. Consider the case
+  This expression is very similar to `\eqref{eq:convolution}` except for the
+definition of `x_{n-k}` and `y_k` for negative indices. Consider the case
 when `n = 0`. The first term of the summation is equal to `x_0y_0` but the
 second term is equal to `x_{-1}y_1` . Although in the original formulation
 of the finite Fourier transform, the x sequence was only specified for indices
-from `0` through `N - 1`, the periodicity property in (48) implies
-that `x_{-1}` be equal to `X_{N-1}`. This leads to the name circular
+from `0` through `N - 1`, the periodicity property in `\eqref{eq:inverse-case}`
+implies that `x_{-1}` be equal to `X_{N-1}`. This leads to the name circular
 convolution since the undefined portions of the original sequence are replaced
 by a circular replication of the original data.
   
@@ -574,13 +580,12 @@ product sequence will represent an aperiodic convolution of the two sequences.
 
   Efficient procedures for computing the finite Fourier transform are known as
 fast Fourier transform (FFT) algorithms. To calculate each of the `N` points
-of the summation shown in (43) requires on the order of `N^2` operations. In
-a fast Fourier transform algorithm the summation is rearranged to take
-advantage of common subexpressions and the computational expense is reduced
-to `N` log `N`. For a 1024 point signal this represents an improvement by
-a factor of approximately 100. The fast Fourier transform algorithm has
-revolutionized digital signal processing and is described in more detail in
-[Bri74].
+of the summation shown in `\eqref{eq:finite-fourier}` requires on the order of
+`N^2` operations. In a fast Fourier transform algorithm the summation is
+rearranged to take advantage of common subexpressions and the computational
+expense is reduced to `N` log `N`. For a 1024 point signal this represents an
+improvement by a factor of approximately 100. The fast Fourier transform algorithm
+has revolutionized digital signal processing and is described in more detail in [Bri74].
 
 ![The effect of circular convolution is shown in (a). (b) shows how the data can be zero-padded so that when an FFT convolution is performed the result represents samples of an aperiodic convolution.](../figures/2-9.png "Figure 2.9")
 
@@ -593,7 +598,9 @@ question was answered by Nyquist who observed that a signal must be sampled at
 least twice during each cycle of the highest frequency of the signal. More
 rigorously, if a signal `x(t)` has a Fourier transform such that
 
-<center>`X(\omega)=0\quad` for `\omega \geq \frac{\omega_N}{2}`</center>
+```
+X(\omega)=0\quad \textrm{for}\ \omega \geq \frac{\omega_N}{2}
+```
 
 then samples of `x` must be measured at a rate greater than `\omega_N`. In
 other words, if `T` is the interval between consecutive samples, we
@@ -611,13 +618,13 @@ function given by
 h(t) = \sum\limits_{-\infty}^{\infty}\delta(t-iT)
 ```
 
-The Fourier transform of `h(t)` can be computed from (26) to be
+The Fourier transform of `h(t)` can be computed from `\eqref{eq:cont-fourier}` to be
 
 ```
 H(\omega) = (\frac{2\pi}{T})\sum\limits_{-\infty}^{\infty}\delta(\omega-\frac{2\pi i}{T})
 ```
 
-By (40) we can convert the multiplication to a convolution in the frequency
+By `\eqref{eq:DFT-freq}` we can convert the multiplication to a convolution in the frequency
 domain. Thus the result of the sampling can be written
 
 ```
@@ -645,18 +652,18 @@ errors are also known as aliasing.
 
 ### Interpretations of the FFT Output
 
-  Correct interpretation of the `X_u`'s in (43) is obviously important. Toward
+  Correct interpretation of the `X_u`'s in `\eqref{eq:finite-fourier}` is obviously important. Toward
 that goal, it is immediately apparent that `X_0` stands for the average (or,
 what is more frequently called the dc) component of the discrete function,
-since from (43)
+since from `\eqref{eq:finite-fourier}`
 
 ```
-X_0 = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_n
+X_0 = \frac{1}{N}\sum\limits_{n=0}^{N-1}x_n \label{eq:periodicity}
 ```
 
 Interpretation of `X_1` requires, perhaps, a bit more effort; it stands for
 1 cycle per sequence length. This can be made obvious by setting `X_1 = 1`,
-while all other `X_i`'s are set equal to 0 in (46). We obtain
+while all other `X_i`'s are set equal to 0 in `\eqref{eq:inverse-fft}`. We obtain
 
 ```
 \begin{align}
@@ -677,7 +684,7 @@ the index `u`, we make use of the following periodicity property
 X_{-u}=X_{N-u}
 ```
 
-which is easily proved by substitution in (43). For further explanation,
+which is easily proved by substitution in `\eqref{eq:finite-fourier}`. For further explanation,
 consider now a particular value for `N`, say 8. We already know that
 
 From the periodicity property we can now add the following
@@ -696,7 +703,7 @@ From the periodicity property we can now add the following
 
 Note that we could also have added "`X_4` represents - 4 cycles per sequence
 length." The fact is that for any `N` element sequence, `X_{N/2}` will
-always be equal to `X_{-N/2}` since from (43)
+always be equal to `X_{-N/2}` since from `\eqref{eq:finite-fourier}`
 
 ```
 X_{N/2} = X_{-N/2} = \sum\limits_0^{N-1}x_n(-1)^n
@@ -724,11 +731,11 @@ prior to taking the FFT. Suppose we multiply the data with `(-1)^n` to
 produce a new sequence `x_n'`
 
 ```
-x_n' = x_n(-1)^n
+x_n' = x_n(-1)^n \label{eq:new-sequence}
 ```
 
-Let `X_u'` designate the FFT of this new sequence. Substituting (63) in
-(43), we obtain
+Let `X_u'` designate the FFT of this new sequence. Substituting `\eqref{eq:new-sequence}` in
+`\eqref{eq:finite-fourier}`, we obtain
 
 ```
 X_u' = X_{u - N/2}
@@ -743,7 +750,9 @@ equivalences
 X_0' & = X_{-N/2} \\
 X_1' & = X_{-N/2+1} \\
 X_2' & = X_{-N/2+2} \\
+\vdots & \\
 X_{N/2}' & = X_{0} \\
+\vdots & \\
 X_{N-1}' & = X_{N/2-1} \\
 \end{align}
 ```
@@ -784,7 +793,7 @@ x_n' & = x_n && \textrm{for}\ n = 0, 1, 2, \cdot\cdot\cdot, N-1 \\
 Let `X_u'` be the FFT of the new sequence `x_n'`. Therefore,
 
 ```
-X_u' = \sum\limits_0^{2N-1}x_n'e^{-j(2\pi/2N)un}
+X_u' = \sum\limits_0^{2N-1}x_n'e^{-j(2\pi/2N)un} \label{FFT-zpad}
 ```
 
 which in terms of the original data is equal to
@@ -812,10 +821,10 @@ In Fig. 2.13 is illustrated the equality between the even-numbered elements of
 the new transform and the original transform.
 That `X_1', X_3',\cdot\cdot\cdot,` etc. are the interpolated values
 between `X_0` and `X_1`; between `X_1` and `X_2`; etc. can be seen from
-the summations in (43) and (74) written in the following form
+the summations in `\eqref{eq:finite-fourier}` and `\eqref{FFT-zpad}` written in the following form
 
 ```
-X_u' = X'(m\frac{2\pi}{2N\tau}) = \sum\limits_{n=0}^{N-1}x(n\tau)e^{-j((2\pi/2N\tau)m)n\tau}
+X_u' = X'(m\frac{2\pi}{2N\tau}) = \sum\limits_{n=0}^{N-1}x(n\tau)e^{-j((2\pi/2N\tau)m)n\tau} \label{half-sampled}
 ```
 
 ```
@@ -832,17 +841,18 @@ the frequency domain, we must zero-extend the time domain signal. This also
 means that if we are comparing the transforms of sequences of _different_
 lengths, they must all be zero-extended to the _same_ number, so that they are
 all plotted with the same display resolution. This is because the upper
-summation, (79), has a sampling interval in the frequency domain
+summation, `\eqref{half-sampled}`, has a sampling interval in the frequency domain
 of `2\pi/2N\tau` while the lower summation, (BO), has a sampling interval
 that is twice as long or `2\pi/N\tau`.
 
 ### How to Deal with Data Defined for Negative Time
 
-  Since the forward and the inverse FFT relationships, (43) and (46), are
-symmetrical, the periodicity property described in (62) also applies in time
-domain. What is being said here is that if a time domain sequence and its
-transform obey (43) and (46), then an `N` element data sequence in the time
-domain must satisfy the following property
+  Since the forward and the inverse FFT relationships, `\eqref{eq:finite-fourier}`
+and `\eqref{eq:inverse-fft}`, are symmetrical, the periodicity property described
+in `\eqref{eq:periodicity}` also applies in time domain. What is being said here
+is that if a time domain sequence and its transform obey `\eqref{eq:finite-fourier}`
+and `\eqref{eq:inverse-fft}`, then an `N` element data sequence in the time domain
+must satisfy the following property
 
 ```
 x_{-n}=x_{N-n}
@@ -874,7 +884,7 @@ they should be fed into an FFT program as
 x_0, x_1, x_2, x_3, x_4, x_{-3}, x_{-2}, x_{-1}
 ```
 
-  To further drive home the implications of the periodicity property in (62),
+  To further drive home the implications of the periodicity property in `\eqref{eq:periodicity}`,
 consider the following example, which consists of taking an 8 element FFT of
 the data
 
