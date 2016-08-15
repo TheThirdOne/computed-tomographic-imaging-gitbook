@@ -40,3 +40,14 @@ table {
     max-width: 50%
   }
 }
+
+@media (max-width: 700px){
+  table {
+    font-size:60%;
+  }
+}
+@media (max-width: 850px) and (min-width: 700px){
+  table {
+    font-size:80%;
+  }
+}
