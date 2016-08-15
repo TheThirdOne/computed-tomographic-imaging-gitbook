@@ -10,7 +10,7 @@ class Renderer < Redcarpet::Render::HTML
   def image(link, title, alttext)
     "<div class=\"img-container\">"\
     "<div class=\"caption\"><b>#{title}</b>#{alttext}</div>"\
-    "<img src=\"#{link}\" alt=\"#{alttext}\" title=\"#{title}\">"\
+    "<div><img src=\"#{link}\" alt=\"#{alttext}\" title=\"#{title}\"></div>"\
     "</div>"
   end
   def doc_header()
@@ -19,7 +19,7 @@ class Renderer < Redcarpet::Render::HTML
   <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
 	TeX:{
-		equationNumbers: {autoNumber:"all"}
+		equationNumbers: {autoNumber:"all",useLabelIds: false}
 	}	
       });
     </script>

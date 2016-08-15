@@ -1,17 +1,11 @@
-p, h3, ol {
-  padding-left: 20%;
-}
-
 .img-container {
   display: flex;
   flex direction: row;
 }
 
-.caption {
-  width: 20%;
-}
-
 img {
+  max-width: 100%;
+  height:auto
 }
 
 th {
@@ -27,4 +21,23 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
   margin-left:20%;
+}
+
+
+@media (min-width: 600px){
+  p, h3, ol {
+    padding-left: 25%;
+  }
+  .caption {
+    width: 20%
+  }
+}
+
+@media (max-width: 600px){
+  p, h3, ol {
+    padding-left: 0;
+  }
+  .caption {
+    max-width: 50%
+  }
 }
