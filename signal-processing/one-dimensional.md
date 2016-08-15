@@ -898,7 +898,9 @@ be fed into the program as they are presented. However, if it is definitely
 known that the data are ZERO before the first element, then the sequence
 presented to the FFT program should look like
 
-![Latex rendering](../figures/2-latex.png)
+```
+\underbrace{0.9\ 0.89\ 0.88\ 0.87}_{\textrm{positive time}}\ \underbrace{\frac{0.86+0}{2}\ 0\ 0\ 0}_{\textrm{negative time}}
+```
 
 This sequence represents the given fact that at `t` = -1, -2 and -3 the data
 are supposed to be zero. Also, since the fifth element represents both `x_4`
